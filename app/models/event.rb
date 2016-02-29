@@ -5,6 +5,8 @@ class Event
   field :d, as: :distance, type: Float
   field :u, as: :units, type: String
 
+  embedded_in :parent, polymorphic: true, touch: true
+
   def meters
     return nil if self.units.nil? || self.distance.nil?
     case self.units
