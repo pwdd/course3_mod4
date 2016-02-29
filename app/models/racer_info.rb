@@ -9,4 +9,11 @@ class RacerInfo
   field :_id, default: ->{ racer_id }
 
   embedded_in :parent, polymorphic: true
+
+  validates :first_name, :last_name, presence: true
+  validates :gender, presence: true, 
+             inclusion: { in: %w(F M) }
+  validates :birth_year, presence: true, 
+             numericality: { less_than: Date.today.year }
+
 end
