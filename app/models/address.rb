@@ -23,9 +23,7 @@ class Address
 
   def self.demongoize(address)
     return nil if address.nil?
-    loc_array = address[:loc][:coordinates]
-    loc = Point.new(*loc_array)
-    Address.new(address[:city], address[:state], loc)
+    address.is_a?(Address) ? address : Address.new(address[:city], address[:state], address[:loc])
   end
 
   def self.evolve(address)
