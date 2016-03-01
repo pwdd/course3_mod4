@@ -20,4 +20,8 @@ class Entrant
     end
     self.secs
   end
+
+  def the_race
+    self.race.race
+  end
 end
