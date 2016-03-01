@@ -3,6 +3,9 @@ class LegResult
   field :secs, type: Float
 
   embedded_in :entrant
+  embeds_one :event, as: :parent
+
+  validates :event, presence: true
 
   def calc_ave
   end
