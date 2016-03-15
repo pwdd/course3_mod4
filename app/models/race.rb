@@ -12,8 +12,8 @@ class Race
            dependent: :delete, 
            order: [:secs.asc, :bib.asc]
 
-  scope :upcoming, -> { where(:date.gte => Date.today) }
-  scope :past, -> { where(:date.lt => Date.today) }
+  scope :upcoming, -> { where(:date.gte => Date.current) }
+  scope :past, -> { where(:date.lt => Date.current) }
 
   DEFAULT_EVENTS = { "swim" => { :order    => 0, 
                                  :name     => "swim", 
