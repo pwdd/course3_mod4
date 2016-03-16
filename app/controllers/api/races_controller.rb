@@ -1,24 +1,18 @@
 module Api
   class RacesController < ApplicationController
     def index
+      if !request.accept || request.accept == '*/*'
+        render plain: '/api/races'
+      else
+      end
     end
 
     def show
-    end
-
-    def new
-    end
-
-    def edit
-    end
-
-    def create
-    end
-
-    def update
-    end
-
-    def destroy
+      if !request.accept || request.accept == '*/*'
+        render plain: "/api/races/#{params[:id]}"
+      else
+        
+      end
     end
   end
 end
