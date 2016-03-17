@@ -17,6 +17,11 @@ module Api
         end
       end
     end
+
+    rescue_from ActionView::MissingTemplate do |exception|
+      @msg = "woops: we do not support that content-type[#{request.accept}]"
+      render plain: @msg, status: 415
+    end
     
     def index
       if request.accept.nil? || request.accept == '*/*'
@@ -30,10 +35,7 @@ module Api
       if request.accept.nil? || request.accept == '*/*'
         render plain: "/api/races/#{params[:id]}"
       else
-        respond_to do |format|
-          format.json { render 'race', status: :ok }
-          format.xml { render 'race', status: :ok }
-        end
+        render 'race', status: :ok, content_type: "#{request.accept}"
       end
     end
 
