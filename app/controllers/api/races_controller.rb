@@ -1,6 +1,6 @@
 module Api
   class RacesController < ApplicationController
-    before_action :set_race, only: [:show, :update]
+    before_action :set_race, only: [:show, :update, :destroy]
     
     def index
       if !request.accept || request.accept == '*/*'
@@ -39,7 +39,13 @@ module Api
       end
     end
 
+    def destroy
+      @race.destroy
+      render nothing: true, status: :no_content
+    end
+
     private 
+    
     def race_params
       params.require(:race).permit(:name, :date)
     end
