@@ -6,11 +6,20 @@ module Api
       @msg = "woops: cannot find race[#{params[:id]}]"
       if request.accept.nil? || request.accept == '*/*'
         render plain: @msg, status: :not_found
+      else
+        respond_to do |format|
+          format.json { render 'api/error_msg', 
+                        status: :not_found, 
+                        content_type: "#{request.accept}" }
+          format.xml { render 'api/error_msg',
+                       status: :not_found,
+                       content_type: "#{request.accept}" }
+        end
       end
     end
     
     def index
-      if !request.accept || request.accept == '*/*'
+      if request.accept.nil? || request.accept == '*/*'
         render plain: "/api/races, offset=[#{params[:offset]}], limit=[#{params[:limit]}]"
       else
 
@@ -18,15 +27,18 @@ module Api
     end
 
     def show
-      if !request.accept || request.accept == '*/*'
+      if request.accept.nil? || request.accept == '*/*'
         render plain: "/api/races/#{params[:id]}"
       else
-        render json: @race, status: :ok
+        respond_to do |format|
+          format.json { render 'race', status: :ok }
+          format.xml { render 'race', status: :ok }
+        end
       end
     end
 
     def create
-      if !request.accept || request.accept == '*/*'
+      if request.accept.nil? || request.accept == '*/*'
         render plain: race_params[:name], status: :ok
       else
         @race = Race.new(race_params)
