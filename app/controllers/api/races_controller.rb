@@ -1,6 +1,6 @@
 module Api
   class RacesController < ApplicationController
-    before_action :set_race, only: [:show]
+    before_action :set_race, only: [:show, :update]
     
     def index
       if !request.accept || request.accept == '*/*'
@@ -28,6 +28,14 @@ module Api
         else
           render plain: @race.errors
         end
+      end
+    end
+
+    def update
+      if @race.update(race_params)
+        render json: @race, status: :ok
+      else
+        render plain: @race.errors
       end
     end
 
