@@ -1,15 +1,15 @@
 module Api
   class RacersController < ApplicationController
     def index
-      if !request.accept || request.accept == '*/*'
+      if request.accept.nil? || request.accept == '*/*'
         render plain: "/api/racers"
       else
-        # implementation
+        
       end
     end
 
     def show
-      if !request.accept || request.accept == '*/*'
+      if request.accept.nil? || request.accept == '*/*'
         render plain: "/api/racers/#{params[:id]}"
       else
         
