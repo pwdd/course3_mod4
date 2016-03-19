@@ -1,6 +1,6 @@
 module Api
   class RacesController < ApplicationController
-    before_action :set_race, only: [:show, :update, :destroy]
+    before_action :set_race, only: [:update, :destroy]
 
     rescue_from Mongoid::Errors::DocumentNotFound do |exception|
       @msg = "woops: cannot find race[#{params[:id]}]"
@@ -35,6 +35,7 @@ module Api
       if request.accept.nil? || request.accept == '*/*'
         render plain: "/api/races/#{params[:id]}"
       else
+        @race = Race.find(params[:id])
         render 'race', status: :ok, content_type: "#{request.accept}"
       end
     end

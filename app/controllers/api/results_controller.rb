@@ -8,10 +8,7 @@ module Api
         @race = Race.find(params[:race_id])
         @entrants = @race.entrants
         if stale?(last_modified: @entrants.max(:updated_at))
-          respond_to do |format|
-            format.json { render json: @entrants, status: :ok }
-            format.xml { render xml: @entrants, status: :ok }
-          end
+          render :index
         end
       end
     end
